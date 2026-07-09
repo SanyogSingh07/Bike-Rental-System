@@ -9,7 +9,7 @@ Volt Rental is a production-ready, full-stack monorepo designed for premium micr
 ## 🚀 Live Links & Documentation
 
 - **Interactive Documentation Website:** [Volt Rental Documentation Portal](https://SanyogSingh07.github.io/Bike-Rental-System/) (Built with MkDocs Material Theme)
-- **Production API:** `https://volt-rental-backend.onrender.com` (Hosted on Render)
+- **Production API:** `https://volt-rental-backend.up.railway.app` (Hosted on Railway)
 - **Production Web Application:** `https://volt-rental-frontend.vercel.app` (Hosted on Vercel)
 
 ---
@@ -116,7 +116,7 @@ Volt-Rental/
 
 Our integration pipelines run continuously via GitHub Actions:
 - **Quality Gates (`ci.yml`):** Automatically triggers on pull requests and pushes to `develop`/`feature/*` branches. Performs frontend lint checks (`oxlint`), type checks, production builds, and runs JUnit test packages.
-- **Deploys (`deploy.yml`):** Triggers on merges to `main`. Deploys the React app to Vercel, sends a Render deploy webhook, pushes the compiled documentation site to GitHub Pages, and polls the `/actuator/health` endpoint to verify full end-to-end functionality.
+- **Deploys (`deploy.yml`):** Triggers on merges to `main`. Deploys the React app to Vercel, deploys the Spring Boot app to Railway, pushes the compiled documentation site to GitHub Pages, and polls the `/actuator/health` endpoint to verify full end-to-end functionality.
 
 ---
 

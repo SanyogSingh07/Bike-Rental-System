@@ -39,5 +39,5 @@ Volt Rental aims to be a showcase of modern software engineering by combining Cl
 - [API Reference](api.md) — RESTful endpoints, request/response formats.
 - [Database Structure](database.md) — Supabase PostgreSQL schema and Row Level Security.
 - [Security & Authentication](security.md) — JWT architecture, BCrypt password hashing, and endpoint rules.
-- [Deployment Guide](deployment.md) — Monorepo-aware CD pipeline details for Vercel and Render.
+- [Deployment Guide](deployment.md) — Monorepo-aware CD pipeline details for Vercel and Railway.
 - [Testing Guidelines](testing.md) — Unit testing, integration testing, and smoke test specs.

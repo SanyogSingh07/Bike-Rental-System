@@ -9,7 +9,7 @@
 ## Medium Term
 
 - Add automated testing and CI checks
-- Improve deployment reliability across Vercel and Render
+- Improve deployment reliability across Vercel and Railway
 - Add analytics and admin capabilities
 
 ## Long Term

@@ -29,4 +29,6 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.tsbuildinfo
-
+# IDE / AI Agent custom folders
+.agents/
+skills-lock.json
