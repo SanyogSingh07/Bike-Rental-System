@@ -9,7 +9,7 @@ Volt Rental is a production-ready, full-stack monorepo designed for premium micr
 ## 🚀 Live Links & Documentation
 
 - **Interactive Documentation Website:** [Volt Rental Documentation Portal](https://SanyogSingh07.github.io/Bike-Rental-System/) (Built with MkDocs Material Theme)
-- **Production API:** `https://volt-rental-backend.up.railway.app` (Hosted on Railway)
+- **Production API:** `https://bike-rental-system-production-2f94.up.railway.app` (Hosted on Railway)
 - **Production Web Application:** `https://volt-rental-frontend.vercel.app` (Hosted on Vercel)
 
 ---
