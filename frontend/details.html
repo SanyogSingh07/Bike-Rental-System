@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>VOLT - Bike Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2b2a2a",
+                        "surface": "#141313",
+                        "tertiary": "#cac6c3",
+                        "on-tertiary": "#32302f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#7f7c7a",
+                        "outline-variant": "#444748",
+                        "surface-tint": "#c8c6c5",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#111111",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#454747",
+                        "surface-variant": "#353434",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-dim": "#141313",
+                        "on-tertiary-fixed": "#1d1b1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#7e7c7c",
+                        "background": "#141313",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface-variant": "#c4c7c7",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary": "#c8c6c5",
+                        "surface-container-highest": "#353434",
+                        "surface-container": "#201f1f",
+                        "on-secondary": "#2f3131",
+                        "inverse-primary": "#5f5e5e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-fixed": "#e6e1df",
+                        "outline": "#8e9192",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#121110",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#1c1b1b",
+                        "tertiary-fixed-dim": "#cac6c3",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "secondary": "#c6c6c7",
+                        "electric-green": "#00D26A"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "container-margin": "20px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(45, 45, 45, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-fab {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Hide scrollbar for gallery */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Tonal Layering */
+        .card-layer {
+            background-color: #2D2D2D;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-lg antialiased overflow-x-hidden selection:bg-electric-green selection:text-black">
+<!-- Top Navigation (Transactional/Details Context - Back Button) -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-container-margin h-16">
+<button aria-label="Go back" class="text-on-surface-variant hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 duration-200" onclick="window.history.back()">
+<span class="material-symbols-outlined text-title-md">arrow_back</span>
+</button>
+<div class="font-title-md text-title-md text-primary font-bold">Details</div>
+<button aria-label="Home" class="text-on-surface-variant hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 duration-200" onclick="window.location.href='index.html'">
+<span class="material-symbols-outlined text-title-md">home</span>
+</button>
+</header>
+<main class="pt-16 pb-32">
+<!-- Large Image Gallery -->
+<section class="relative w-full h-[50vh] md:h-[60vh] overflow-hidden bg-surface-container-lowest flex items-center justify-center p-md">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none"></div>
+<!-- Gallery Scroll Container -->
+<div class="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-full w-full justify-center items-center">
+<div class="snap-center shrink-0 w-full h-full relative flex items-center justify-center">
+<img id="detail-image" class="max-h-full object-contain relative z-10" src="images/ather_450x.png" alt="Bike Specs Image"/>
+</div>
+</div>
+<!-- Premium Badge Overlay -->
+<div class="absolute top-6 left-container-margin z-20">
+<span class="bg-black text-electric-green font-label-bold text-label-bold px-3 py-1 rounded-sm uppercase tracking-widest border border-electric-green/30">ELITE</span>
+</div>
+</section>
+<!-- Product Header & Pricing -->
+<section class="px-container-margin mt-lg relative z-20 -mt-6">
+<div class="flex justify-between items-end mb-xs">
+<h1 id="detail-title" class="font-display-lg text-display-lg text-primary tracking-tighter">V-Carbon</h1>
+<div class="flex items-center gap-1 text-electric-green">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span id="detail-battery" class="font-title-md text-title-md font-bold">100%</span>
+</div>
+</div>
+<p id="detail-type" class="font-body-lg text-body-lg text-on-surface-variant mb-lg">Urban Performance E-Bike</p>
+<!-- Pricing Bento Box -->
+<div class="grid grid-cols-2 gap-md mb-xl">
+<div class="card-layer rounded-xl p-md flex flex-col justify-center items-center">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Per Minute</span>
+<div class="flex items-baseline gap-1">
+<span class="font-title-md text-title-md text-electric-green">₹</span>
+<span id="detail-price-min" class="font-headline-lg-mobile text-headline-lg-mobile text-primary">0.00</span>
+</div>
+</div>
+<div class="card-layer rounded-xl p-md flex flex-col justify-center items-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-electric-green/10 rounded-bl-full blur-xl"></div>
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Per Hour</span>
+<div class="flex items-baseline gap-1">
+<span class="font-title-md text-title-md text-electric-green">₹</span>
+<span id="detail-price-hour" class="font-headline-lg-mobile text-headline-lg-mobile text-primary">0.00</span>
+</div>
+<span class="text-[10px] text-on-surface-variant/60 mt-1">Save 33%</span>
+</div>
+</div>
+</section>
+<!-- Specs Grid -->
+<section class="px-container-margin mb-xl">
+<h2 class="font-title-md text-title-md text-primary mb-md">Specifications</h2>
+<div class="grid grid-cols-2 gap-md">
+<!-- Power -->
+<div class="glass-panel rounded-xl p-md flex items-start gap-md">
+<div class="p-2 bg-white/5 rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined">speed</span>
+</div>
+<div>
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Power</div>
+<div id="detail-power" class="font-title-md text-title-md text-primary">750W</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant/70">Peak Output</div>
+</div>
+</div>
+<!-- Top Speed -->
+<div class="glass-panel rounded-xl p-md flex items-start gap-md">
+<div class="p-2 bg-white/5 rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined">rocket_launch</span>
+</div>
+<div>
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Top Speed</div>
+<div id="detail-speed" class="font-title-md text-title-md text-primary">28 mph</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant/70">Class 3 Assist</div>
+</div>
+</div>
+<!-- Range -->
+<div class="glass-panel rounded-xl p-md flex items-start gap-md">
+<div class="p-2 bg-white/5 rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined">route</span>
+</div>
+<div>
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Max Range</div>
+<div id="detail-range" class="font-title-md text-title-md text-primary">45 mi</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant/70">Eco Mode</div>
+</div>
+</div>
+<!-- Weight -->
+<div class="glass-panel rounded-xl p-md flex items-start gap-md">
+<div class="p-2 bg-white/5 rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined">weight</span>
+</div>
+<div>
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Weight</div>
+<div id="detail-weight" class="font-title-md text-title-md text-primary">42 lbs</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant/70">Carbon Frame</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Details -->
+<section class="px-container-margin mb-xl">
+<h2 class="font-title-md text-title-md text-primary mb-md">Technical Details</h2>
+<div class="grid grid-cols-2 gap-md">
+<div class="card-layer rounded-xl p-md">
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Engine</div>
+<div id="detail-tech-engine" class="font-body-lg text-body-lg text-primary">750W Mid-Drive</div>
+</div>
+<div class="card-layer rounded-xl p-md">
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Battery</div>
+<div id="detail-tech-battery" class="font-body-lg text-body-lg text-primary">48V 15Ah Li-ion</div>
+</div>
+<div class="card-layer rounded-xl p-md">
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Transmission</div>
+<div id="detail-tech-trans" class="font-body-lg text-body-lg text-primary">Shimano 7-Speed</div>
+</div>
+<div class="card-layer rounded-xl p-md">
+<div class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-1">Mileage</div>
+<div id="detail-tech-mileage" class="font-body-lg text-body-lg text-primary">45-60 miles</div>
+</div>
+</div>
+</section>
+<!-- Features List -->
+<section class="px-container-margin mb-xl">
+<h2 class="font-title-md text-title-md text-primary mb-md">Features</h2>
+<ul class="space-y-4">
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-electric-green">check_circle</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">Integrated Hydraulic Disc Brakes</span>
+</li>
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-electric-green">check_circle</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">Turn-by-turn Navigation Display</span>
+</li>
+<li class="flex items-center gap-md">
+<span class="material-symbols-outlined text-electric-green">check_circle</span>
+<span class="font-body-lg text-body-lg text-on-surface-variant">Anti-Theft GPS Tracking</span>
+</li>
+</ul>
+</section>
+<!-- Rental Policies -->
+<section class="px-container-margin mb-xl">
+<h2 class="font-title-md text-title-md text-primary mb-md">Rental Policies</h2>
+<div class="glass-panel rounded-xl p-md space-y-4">
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-electric-green">ev_station</span>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Battery Policy</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Return with at least 20% charge or a small convenience fee applies.</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-electric-green">gavel</span>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Damage Policy</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Renter is responsible for all cosmetic and structural damage during rent.</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-electric-green">event_busy</span>
+<div>
+<div class="font-label-bold text-label-bold text-primary">Cancellation</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Free cancellation up to 24 hours before the booking starts.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-container-margin bg-gradient-to-t from-background via-background/90 to-transparent z-40">
+<button id="book-now-btn" class="w-full h-[64px] bg-[#00D26A] text-[#111111] font-title-md text-title-md font-bold rounded-xl flex items-center justify-center gap-2 shadow-[0_20px_40px_rgba(0,0,0,0.4)] active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            Book Now
+        </button>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/rental.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const params = new URLSearchParams(window.location.search);
+        const bikeId = params.get('id') || 1;
+        
+        try {
+            const bike = await apiRequest(`/bike/${bikeId}`);
+            if (bike) {
+                // If it has local seed images, use them, otherwise use returned url
+                if (bike.name.includes("Ather")) {
+                    document.getElementById("detail-image").src = "images/ather_450x.png";
+                } else if (bike.name.includes("OLA") || bike.name.includes("Roadster")) {
+                    document.getElementById("detail-image").src = "images/ola_roadster.png";
+                } else if (bike.name.includes("Triumph") || bike.name.includes("Speed")) {
+                    document.getElementById("detail-image").src = "images/triumph_speed.png";
+                } else {
+                    document.getElementById("detail-image").src = bike.imageUrl;
+                }
+                
+                document.getElementById("detail-title").textContent = bike.name;
+                document.getElementById("detail-type").textContent = `${bike.type} Series Ride`;
+                document.getElementById("detail-battery").textContent = `${bike.batteryPercentage}%`;
+                document.getElementById("detail-price-min").textContent = bike.pricePerMinute.toFixed(2);
+                document.getElementById("detail-price-hour").textContent = (bike.pricePerMinute * 40).toFixed(2);
+                
+                // Populate specs details
+                document.getElementById("detail-range").textContent = bike.type === "Electric" ? "150 km" : "50 km";
+                document.getElementById("detail-power").textContent = bike.type === "Electric" ? "750W" : "350W";
+                document.getElementById("detail-speed").textContent = bike.type === "Electric" ? "45 km/h" : "25 km/h";
+                document.getElementById("detail-weight").textContent = bike.type === "Electric" ? "48 lbs" : "38 lbs";
+
+                // Populate technical specs
+                document.getElementById("detail-tech-engine").textContent = bike.type === "Electric" ? "Hub Motor" : "Single Cylinder";
+                document.getElementById("detail-tech-battery").textContent = bike.type === "Electric" ? "48V 15Ah Li-ion" : "12V SLA Battery";
+                document.getElementById("detail-tech-trans").textContent = bike.type === "Electric" ? "Automatic" : "Manual 6-Speed";
+                document.getElementById("detail-tech-mileage").textContent = bike.type === "Electric" ? "45-60 miles" : "35-40 km/l";
+                
+                const bookBtn = document.getElementById("book-now-btn");
+                bookBtn.addEventListener("click", () => {
+                    window.location.href = `rent.html?bikeId=${bikeId}`;
+                });
+            }
+        } catch (err) {
+            console.error("Could not fetch bike details", err);
+        }
+    });
+</script>
+</body></html>

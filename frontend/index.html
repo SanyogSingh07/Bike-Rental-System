@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VOLT - Smart Bike Rental</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2b2a2a",
+                        "surface": "#141313",
+                        "tertiary": "#cac6c3",
+                        "on-tertiary": "#32302f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#7f7c7a",
+                        "outline-variant": "#444748",
+                        "surface-tint": "#c8c6c5",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#111111",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#454747",
+                        "surface-variant": "#353434",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-dim": "#141313",
+                        "on-tertiary-fixed": "#1d1b1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#7e7c7c",
+                        "background": "#141313",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface-variant": "#c4c7c7",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary": "#c8c6c5",
+                        "surface-container-highest": "#353434",
+                        "surface-container": "#201f1f",
+                        "on-secondary": "#2f3131",
+                        "inverse-primary": "#5f5e5e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-fixed": "#e6e1df",
+                        "outline": "#8e9192",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#121110",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#1c1b1b",
+                        "tertiary-fixed-dim": "#cac6c3",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "secondary": "#c6c6c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "container-margin": "20px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #141313;
+            color: #e5e2e1;
+        }
+        .glass-panel {
+            background: rgba(45, 45, 45, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-btn-primary {
+            background-color: #00D26A;
+            color: #111111;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .text-electric {
+            color: #00D26A;
+        }
+        .bg-electric {
+            background-color: #00D26A;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-xl shadow-black/20 flex items-center justify-between px-container-margin h-16">
+<div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+<span class="material-symbols-outlined text-primary font-title-md text-title-md" data-icon="electric_bolt" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+<span class="font-display-lg text-display-lg text-primary tracking-tighter text-2xl">VOLT</span>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold active:scale-95 duration-200" href="index.html">Home</a>
+<a class="text-on-surface-variant hover:text-primary/80 transition-colors active:scale-95 duration-200" href="explore.html">Explore</a>
+<a class="text-on-surface-variant hover:text-primary/80 transition-colors active:scale-95 duration-200" href="ride-status.html">Rides</a>
+<a class="text-on-surface-variant hover:text-primary/80 transition-colors active:scale-95 duration-200" href="rewards.html">Rewards</a>
+<a class="text-on-surface-variant hover:text-primary/80 transition-colors active:scale-95 duration-200" href="admin.html" id="admin-nav-link" style="display: none;">Admin</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant flex items-center justify-center cursor-pointer hover:bg-white/5 transition-colors active:scale-95 duration-200" onclick="window.location.href='profile.html'">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-16 pt-lg px-container-margin md:px-xl md:max-w-7xl md:mx-auto w-full">
+<!-- Hero Section -->
+<section class="relative rounded-2xl overflow-hidden mb-lg glass-panel h-[400px] flex flex-col justify-end p-lg">
+<div class="absolute inset-0 bg-cover bg-center opacity-60 z-0" style="background-image: url('images/ather_450x.png')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/50 to-transparent z-10"></div>
+<div class="relative z-20 w-full md:w-2/3">
+<span class="inline-block px-3 py-1 bg-black text-electric font-label-bold text-label-bold rounded-full mb-4 border border-outline-variant">ELITE SERIES</span>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Unleash the City.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6">Experience ultimate performance with our new Carbon X1. Zero emissions, infinite possibilities.</p>
+<button class="glass-btn-primary font-title-md text-title-md rounded-full px-8 py-4 flex items-center gap-2 active:scale-95 transition-transform" onclick="window.location.href='rent.html'">
+<span>Unlock Now</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Quick Search -->
+<section class="mb-lg">
+<div class="glass-panel rounded-xl p-md flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none text-on-surface font-body-lg text-body-lg w-full focus:ring-0 placeholder-[#F5F5F5]/50 p-0" placeholder="Find bikes near you..." type="text" id="quick-search-input" onkeydown="if(event.key === 'Enter') window.location.href='explore.html?search=' + encodeURIComponent(this.value)"/>
+<button class="p-2 bg-surface-container-highest rounded-lg hover:bg-surface-bright transition-colors" onclick="window.location.href='explore.html'">
+<span class="material-symbols-outlined text-on-surface" data-icon="tune">tune</span>
+</button>
+</div>
+</section>
+<!-- Categories Bento -->
+<section class="mb-xl">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-title-md text-title-md text-on-surface">Categories</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Scooters -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center gap-2 aspect-square cursor-pointer hover:bg-white/5 transition-colors border-electric/30" onclick="window.location.href='explore.html?filter=Electric'">
+<span class="material-symbols-outlined text-electric text-4xl mb-2">electric_scooter</span>
+<span class="font-title-md text-title-md text-on-surface">Scooters</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Electric</span>
+</div>
+<!-- Commuter -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center gap-2 aspect-square cursor-pointer hover:bg-white/5 transition-colors" onclick="window.location.href='explore.html?filter=Cruiser'">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl mb-2">commute</span>
+<span class="font-title-md text-title-md text-on-surface">Commuter</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Daily</span>
+</div>
+<!-- Sports -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center gap-2 aspect-square cursor-pointer hover:bg-white/5 transition-colors" onclick="window.location.href='explore.html?filter=Sport'">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl mb-2">sports_motorsports</span>
+<span class="font-title-md text-title-md text-on-surface">Sports</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Performance</span>
+</div>
+<!-- Adventure -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center gap-2 aspect-square cursor-pointer hover:bg-white/5 transition-colors" onclick="window.location.href='explore.html?filter=Mountain'">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl mb-2">explore</span>
+<span class="font-title-md text-title-md text-on-surface">Adventure</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Off-road</span>
+</div>
+</div>
+</section>
+<!-- Electric Collection -->
+<section class="mb-xl overflow-hidden">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-title-md text-title-md text-on-surface">Electric Collection</h2>
+<button class="text-electric font-body-sm text-body-sm hover:underline" onclick="window.location.href='explore.html?filter=Electric'">View All</button>
+</div>
+<div class="flex overflow-x-auto gap-lg hide-scrollbar pb-4 -mx-container-margin px-container-margin md:mx-0 md:px-0">
+<div class="min-w-[280px] md:min-w-[320px] glass-panel rounded-2xl p-md relative flex-shrink-0">
+<div class="absolute top-4 right-4 z-10"><span class="px-2 py-1 bg-black text-electric font-label-bold text-label-bold rounded-md border border-outline-variant">NEW</span></div>
+<div class="h-40 w-full mb-4 relative rounded-lg overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<img alt="Ather 450X" class="object-cover w-full h-full opacity-80 mix-blend-screen" src="images/ather_450x.png"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Ather 450X</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-electric text-sm">bolt</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">150km Range</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="font-title-md text-title-md text-on-surface">₹6.00<span class="font-body-sm text-body-sm text-on-surface-variant">/min</span></span>
+<button class="bg-surface-bright text-on-surface rounded-full w-10 h-10 flex items-center justify-center hover:bg-electric hover:text-black transition-colors" onclick="window.location.href='details.html?id=1'">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Rides Horizontal Scroll -->
+<section class="mb-xl overflow-hidden">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-title-md text-title-md text-on-surface">Featured Rides</h2>
+<button class="text-electric font-body-sm text-body-sm hover:underline" onclick="window.location.href='explore.html'">View All</button>
+</div>
+<div class="flex overflow-x-auto gap-lg hide-scrollbar pb-4 -mx-container-margin px-container-margin md:mx-0 md:px-0">
+<!-- Bike Card 1 -->
+<div class="min-w-[280px] md:min-w-[320px] glass-panel rounded-2xl p-md relative flex-shrink-0">
+<div class="absolute top-4 right-4 z-10">
+<span class="px-2 py-1 bg-black text-electric font-label-bold text-label-bold rounded-md border border-outline-variant">PRO</span>
+</div>
+<div class="h-40 w-full mb-4 relative rounded-lg overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<img alt="Ola Roadster Pro" class="object-cover w-full h-full opacity-80 mix-blend-screen" src="images/ola_roadster.png"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Ola Roadster Pro</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-electric text-sm" data-icon="bolt">bolt</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">250km Range</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="font-title-md text-title-md text-on-surface">₹8.00<span class="font-body-sm text-body-sm text-on-surface-variant">/min</span></span>
+<button class="bg-surface-bright text-on-surface rounded-full w-10 h-10 flex items-center justify-center hover:bg-electric hover:text-black transition-colors" onclick="window.location.href='details.html?id=2'">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Bike Card 2 -->
+<div class="min-w-[280px] md:min-w-[320px] glass-panel rounded-2xl p-md relative flex-shrink-0">
+<div class="h-40 w-full mb-4 relative rounded-lg overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<img alt="Triumph Speed 400" class="object-cover w-full h-full opacity-80 mix-blend-screen" src="images/triumph_speed.png"/>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Triumph Speed 400</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="pedal_bike">pedal_bike</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Standard Fuel</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-white/5">
+<span class="font-title-md text-title-md text-on-surface">₹10.00<span class="font-body-sm text-body-sm text-on-surface-variant">/min</span></span>
+<button class="bg-surface-bright text-on-surface rounded-full w-10 h-10 flex items-center justify-center hover:bg-electric hover:text-black transition-colors" onclick="window.location.href='details.html?id=3'">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Stepper -->
+<section class="mb-xl">
+<h2 class="font-title-md text-title-md text-on-surface mb-lg text-center">How It Works</h2>
+<div class="glass-panel rounded-2xl p-lg relative">
+<!-- Connecting Line -->
+<div class="absolute left-[39px] md:left-1/2 top-10 bottom-10 w-0.5 bg-outline-variant/30 md:-ml-[1px]"></div>
+<div class="flex flex-col gap-8">
+<!-- Step 1 -->
+<div class="flex items-start md:items-center gap-4 relative z-10 md:flex-row md:justify-center">
+<div class="md:w-1/2 md:text-right md:pr-8 hidden md:block">
+<h3 class="font-title-md text-title-md text-on-surface">Find a Ride</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Use the map to locate the nearest available bike.</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-electric flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,210,106,0.2)]">
+<span class="font-label-bold text-label-bold text-electric">1</span>
+</div>
+<div class="md:w-1/2 md:pl-8">
+<div class="md:hidden">
+<h3 class="font-title-md text-title-md text-on-surface">Find a Ride</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Use the map to locate the nearest available bike.</p>
+</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start md:items-center gap-4 relative z-10 md:flex-row-reverse md:justify-center">
+<div class="md:w-1/2 md:text-left md:pl-8 hidden md:block">
+<h3 class="font-title-md text-title-md text-on-surface">Unlock &amp; Go</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Scan the QR code to unlock instantly.</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center shrink-0">
+<span class="font-label-bold text-label-bold text-on-surface-variant">2</span>
+</div>
+<div class="md:w-1/2 md:pr-8 md:text-right">
+<div class="md:hidden">
+<h3 class="font-title-md text-title-md text-on-surface">Unlock &amp; Go</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Scan the QR code to unlock instantly.</p>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start md:items-center gap-4 relative z-10 md:flex-row md:justify-center">
+<div class="md:w-1/2 md:text-right md:pr-8 hidden md:block">
+<h3 class="font-title-md text-title-md text-on-surface">Park Safely</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Leave the bike in designated zones to end trip.</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center shrink-0">
+<span class="font-label-bold text-label-bold text-on-surface-variant">3</span>
+</div>
+<div class="md:w-1/2 md:pl-8">
+<div class="md:hidden">
+<h3 class="font-title-md text-title-md text-on-surface">Park Safely</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Leave the bike in designated zones to end trip.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/60 dark:bg-surface/60 backdrop-blur-2xl rounded-t-xl border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.4)] flex justify-around items-center h-20 px-md">
+<!-- Active Tab: Home -->
+<a class="flex flex-col items-center justify-center text-primary relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-primary after:rounded-full active:scale-90 transition-transform" href="index.html">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 active:scale-90 transition-transform" href="explore.html">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 active:scale-90 transition-transform" href="ride-status.html">
+<span class="material-symbols-outlined" data-icon="directions_bike">directions_bike</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 active:scale-90 transition-transform" href="rewards.html">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 active:scale-90 transition-transform" href="profile.html">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) -->
+<div class="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40">
+<button class="w-16 h-16 rounded-full bg-electric text-[#111111] shadow-[0_10px_30px_rgba(0,210,106,0.4)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform" onclick="window.location.href='rent.html'">
+<span class="material-symbols-outlined text-3xl" data-icon="qr_code_scanner">qr_code_scanner</span>
+</button>
+</div>
+
+<script src="js/app.js"></script>
+</body></html>

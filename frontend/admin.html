@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Analytics Dashboard - VOLT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#2b2a2a",
+                    "surface": "#141313",
+                    "tertiary": "#cac6c3",
+                    "on-tertiary": "#32302f",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-container": "#7f7c7a",
+                    "outline-variant": "#444748",
+                    "surface-tint": "#c8c6c5",
+                    "primary-fixed": "#e5e2e1",
+                    "primary-container": "#111111",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "on-background": "#e5e2e1",
+                    "secondary-container": "#454747",
+                    "surface-variant": "#353434",
+                    "on-error": "#690005",
+                    "on-secondary-container": "#b4b5b5",
+                    "surface-dim": "#141313",
+                    "on-tertiary-fixed": "#1d1b1a",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "on-primary-container": "#7e7c7c",
+                    "background": "#141313",
+                    "on-primary-fixed-variant": "#474646",
+                    "on-secondary-fixed-variant": "#454747",
+                    "on-surface-variant": "#c4c7c7",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-primary": "#313030",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "surface-bright": "#3a3939",
+                    "inverse-on-surface": "#313030",
+                    "primary": "#c8c6c5",
+                    "surface-container-highest": "#353434",
+                    "surface-container": "#201f1f",
+                    "on-secondary": "#2f3131",
+                    "inverse-primary": "#5f5e5e",
+                    "secondary-fixed": "#e2e2e2",
+                    "tertiary-fixed": "#e6e1df",
+                    "outline": "#8e9192",
+                    "surface-container-low": "#1c1b1b",
+                    "tertiary-container": "#121110",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-primary-fixed": "#1c1b1b",
+                    "tertiary-fixed-dim": "#cac6c3",
+                    "on-surface": "#e5e2e1",
+                    "inverse-surface": "#e5e2e1",
+                    "on-tertiary-fixed-variant": "#484645",
+                    "secondary": "#c6c6c7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "lg": "24px",
+                    "container-margin": "20px",
+                    "unit": "4px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "md": "16px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-bold": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #111111;
+            color: #e5e2e1;
+        }
+        .glass-panel {
+            background: rgba(45, 45, 45, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .text-electric-green { color: #00D26A; }
+        .bg-electric-green { background-color: #00D26A; }
+        .border-electric-green { border-color: #00D26A; }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex font-body-lg text-on-background selection:bg-primary/30 selection:text-primary">
+<!-- Sidebar Navigation (Desktop Only) -->
+<aside class="w-64 hidden md:flex flex-col bg-surface-container-low border-r border-white/5 h-screen sticky top-0 shrink-0">
+<div class="h-20 flex items-center px-lg border-b border-white/5">
+<span class="material-symbols-outlined text-primary text-3xl mr-sm" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+<span class="font-display-lg text-title-md text-primary tracking-tighter cursor-pointer" onclick="window.location.href='index.html'">VOLT ADMIN</span>
+</div>
+<nav class="flex-1 py-lg px-md space-y-sm overflow-y-auto">
+<a class="flex items-center space-x-md px-md py-sm rounded-lg bg-surface-bright text-primary font-title-md text-body-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center space-x-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors font-body-lg" href="#user-directory-section">
+<span class="material-symbols-outlined">people</span>
+<span>Users</span>
+</a>
+<a class="flex items-center space-x-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-white/5 transition-colors font-body-lg" href="#fleet-section">
+<span class="material-symbols-outlined">electric_moped</span>
+<span>Fleet</span>
+</a>
+</nav>
+<div class="p-lg border-t border-white/5">
+<button class="w-full bg-[#2D2D2D] text-on-surface px-4 py-2 rounded-lg font-label-bold text-label-bold border border-white/10 active:scale-95 transition-transform" onclick="window.location.href='index.html'">
+Exit Admin
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-x-hidden min-w-0">
+<!-- Header -->
+<header class="h-20 flex items-center justify-between px-xl bg-surface/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-40">
+<h1 class="font-headline-lg text-headline-lg text-primary">Analytics Overview</h1>
+<div class="flex items-center space-x-lg">
+<button class="md:hidden bg-[#2D2D2D] text-on-surface px-4 py-2 rounded-lg font-label-bold text-label-bold border border-white/10 active:scale-95 transition-transform" onclick="window.location.href='index.html'">
+Exit Admin
+</button>
+</div>
+</header>
+<div class="p-xl space-y-xl max-w-7xl mx-auto">
+<!-- KPI Cards Grid (6 col) -->
+<section class="grid grid-cols-2 lg:grid-cols-6 gap-lg">
+<!-- KPI 1 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Users</span>
+<span id="metric-users" class="font-headline-lg text-headline-lg text-primary font-bold">0</span>
+</div>
+<!-- KPI 2 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Fleet</span>
+<span id="metric-bikes" class="font-headline-lg text-headline-lg text-primary font-bold">0</span>
+</div>
+<!-- KPI 3 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Available</span>
+<span id="metric-available" class="font-headline-lg text-headline-lg text-electric-green font-bold">0</span>
+</div>
+<!-- KPI 4 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Rented</span>
+<span id="metric-rented" class="font-headline-lg text-headline-lg text-primary font-bold">0</span>
+</div>
+<!-- KPI 5 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Revenue</span>
+<span id="metric-revenue" class="font-headline-lg text-headline-lg text-electric-green font-bold">₹0.00</span>
+</div>
+<!-- KPI 6 -->
+<div class="glass-panel rounded-xl p-md flex flex-col justify-between">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Avg Duration</span>
+<span id="metric-duration" class="font-headline-lg text-headline-lg text-primary font-bold">0 m</span>
+</div>
+</section>
+
+<!-- Charts Dashboard Section -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<div class="glass-panel rounded-2xl p-lg flex flex-col justify-between h-[340px]">
+<h3 class="font-title-md text-title-md text-on-surface mb-sm">Revenue Trends</h3>
+<div class="flex-grow flex items-center justify-center relative">
+<canvas id="revenue-chart"></canvas>
+</div>
+</div>
+
+<div class="glass-panel rounded-2xl p-lg flex flex-col justify-between h-[340px]">
+<h3 class="font-title-md text-title-md text-on-surface mb-sm">Category Split</h3>
+<div class="flex-grow flex items-center justify-center relative">
+<canvas id="category-chart"></canvas>
+</div>
+</div>
+
+<div class="glass-panel rounded-2xl p-lg flex flex-col justify-between h-[340px]">
+<h3 class="font-title-md text-title-md text-on-surface mb-sm">Weekly Volumes</h3>
+<div class="flex-grow flex items-center justify-center relative">
+<canvas id="rentals-chart"></canvas>
+</div>
+</div>
+</section>
+
+<!-- Fleet & Users Management -->
+<div class="space-y-xl">
+<!-- Live Fleet Management Table -->
+<section id="fleet-section" class="glass-panel rounded-2xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-md border-b border-white/5 pb-sm">
+<h2 class="font-title-md text-title-md text-on-surface">Live Fleet Management</h2>
+<button class="bg-electric-green text-[#111111] px-4 py-2 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform" onclick="openAddBikeModal()">
+                        Add New Bike
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="text-on-surface-variant border-b border-white/10 h-10">
+<th class="p-sm">ID</th>
+<th class="p-sm">Name</th>
+<th class="p-sm">Type</th>
+<th class="p-sm">Price</th>
+<th class="p-sm">Battery</th>
+<th class="p-sm">Status</th>
+<th class="p-sm">Actions</th>
+</tr>
+</thead>
+<tbody id="admin-bikes-tbody">
+<!-- Dynamic Content loaded from admin.js -->
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- User Directory Table -->
+<section id="user-directory-section" class="glass-panel rounded-2xl p-lg flex flex-col">
+<div class="mb-md border-b border-white/5 pb-sm">
+<h2 class="font-title-md text-title-md text-on-surface">User Directory</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="text-on-surface-variant border-b border-white/10 h-10">
+<th class="p-sm">ID</th>
+<th class="p-sm">Username</th>
+<th class="p-sm">Email</th>
+<th class="p-sm">Role</th>
+<th class="p-sm">Points</th>
+<th class="p-sm">Level</th>
+</tr>
+</thead>
+<tbody id="admin-users-tbody">
+<!-- Dynamic Content loaded from admin.js -->
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</main>
+
+<!-- Admin Bike Add/Edit CRUD Modal -->
+<div id="bike-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-container-margin overflow-y-auto">
+<div class="glass-panel w-full max-w-lg rounded-2xl p-lg flex flex-col gap-lg shadow-2xl relative">
+<div class="flex justify-between items-center border-b border-white/10 pb-md">
+<h3 id="modal-title" class="font-title-md text-title-md text-on-surface">Add New Bike</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1" onclick="closeBikeModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form id="bike-form" onsubmit="handleBikeFormSubmit(event)">
+<input id="bike-id" type="hidden"/>
+<div class="space-y-sm">
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Bike Model Name</label>
+<input class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-name" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Category Type</label>
+<select class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-type" required="">
+<option value="Electric">Electric</option>
+<option value="Cruiser">Cruiser</option>
+<option value="Sport">Sport</option>
+<option value="Mountain">Mountain</option>
+</select>
+</div>
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Rental Rate (₹ per minute)</label>
+<input class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-price" min="0.1" required="" step="0.1" type="number"/>
+</div>
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Battery / Fuel Percentage</label>
+<input class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-battery" max="100" min="0" required="" type="number"/>
+</div>
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Current Status</label>
+<select class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-status" required="">
+<option value="AVAILABLE">Available</option>
+<option value="RENTED">Rented</option>
+<option value="MAINTENANCE">Maintenance</option>
+</select>
+</div>
+<div>
+<label class="block text-xs text-on-surface-variant uppercase font-label-bold mb-1">Vehicle Description</label>
+<textarea class="w-full bg-[#2D2D2D] border-none rounded-lg p-sm text-on-surface focus:ring-1 focus:ring-electric-green focus:outline-none" id="bike-desc" rows="3"></textarea>
+</div>
+</div>
+<div class="mt-lg flex justify-end gap-md">
+<button class="bg-[#2D2D2D] text-on-surface px-4 py-2 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform" onclick="closeBikeModal()" type="button">Cancel</button>
+<button class="bg-electric-green text-[#111111] px-6 py-2 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform" type="submit">Save Model</button>
+</div>
+</form>
+</div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+</body></html>

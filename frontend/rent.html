@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>VOLT - QR Unlock</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2b2a2a",
+                        "surface": "#141313",
+                        "tertiary": "#cac6c3",
+                        "on-tertiary": "#32302f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#7f7c7a",
+                        "outline-variant": "#444748",
+                        "surface-tint": "#c8c6c5",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#111111",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#454747",
+                        "surface-variant": "#353434",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-dim": "#141313",
+                        "on-tertiary-fixed": "#1d1b1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#7e7c7c",
+                        "background": "#141313",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface-variant": "#c4c7c7",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary": "#c8c6c5",
+                        "surface-container-highest": "#353434",
+                        "surface-container": "#201f1f",
+                        "on-secondary": "#2f3131",
+                        "inverse-primary": "#5f5e5e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-fixed": "#e6e1df",
+                        "outline": "#8e9192",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#121110",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "secondary": "#c6c6c7",
+                        "electric-green": "#00D26A",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "container-margin": "20px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .scanner-frame {
+            box-shadow: 0 0 0 9999px rgba(17, 17, 17, 0.85);
+        }
+        .scanner-corner {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            border-color: #00D26A;
+            border-style: solid;
+        }
+        .corner-tl { top: 0; left: 0; border-width: 4px 0 0 4px; border-top-left-radius: 12px; }
+        .corner-tr { top: 0; right: 0; border-width: 4px 4px 0 0; border-top-right-radius: 12px; }
+        .corner-bl { bottom: 0; left: 0; border-width: 0 0 4px 4px; border-bottom-left-radius: 12px; }
+        .corner-br { bottom: 0; right: 0; border-width: 0 4px 4px 0; border-bottom-right-radius: 12px; }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00D26A, transparent);
+            box-shadow: 0 0 10px #00D26A, 0 0 20px #00D26A;
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg antialiased overflow-hidden min-h-screen relative selection:bg-electric-green selection:text-black">
+    <!-- Camera Background Simulation -->
+    <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-[#111111] opacity-90 absolute"></div>
+        <img class="w-full h-full object-cover" src="images/ather_450x.png" alt="Rider perspective"/>
+    </div>
+    
+    <!-- Top Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-container-margin h-16 bg-gradient-to-b from-surface/90 to-transparent">
+        <button class="w-10 h-10 rounded-full bg-surface-container/50 backdrop-blur-md flex items-center justify-center border border-white/5 active:scale-95 transition-transform" onclick="window.location.href='index.html'">
+            <span class="material-symbols-outlined text-primary">close</span>
+        </button>
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-electric-green" style="font-variation-settings: 'FILL' 1;">flashlight_on</span>
+            <span class="font-label-bold text-label-bold text-primary">FLASHLIGHT</span>
+        </div>
+    </header>
+
+    <!-- Main Scanner Area -->
+    <main class="relative z-10 h-screen flex flex-col items-center justify-center">
+        <!-- Scanner Overlay Container -->
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 scanner-frame rounded-2xl flex items-center justify-center">
+            <!-- Scanning Reticle -->
+            <div class="absolute inset-0 w-full h-full border-2 border-white/10 rounded-2xl">
+                <div class="scanner-corner corner-tl"></div>
+                <div class="scanner-corner corner-tr"></div>
+                <div class="scanner-corner corner-bl"></div>
+                <div class="scanner-corner corner-br"></div>
+                <div class="scan-line"></div>
+            </div>
+            <span class="material-symbols-outlined text-white/30 text-6xl">qr_code_scanner</span>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="mt-lg text-center px-container-margin pointer-events-auto">
+            <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-xs">Scan to Unlock</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs mx-auto mb-4">
+                Align the QR code on the handlebar or lock to start your ride immediately.
+            </p>
+        </div>
+
+        <!-- Preselected Bike Panel -->
+        <div id="preselected-bike-card" class="bg-[#2D2D2D]/90 backdrop-blur-md border border-white/10 rounded-xl p-md flex flex-col gap-2 w-72 pointer-events-auto shadow-2xl" style="display: none;">
+            <h3 id="preselected-bike-name" class="font-title-md text-[16px] text-on-surface">Unlock e-Bike Pro 1</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant"><span id="preselected-bike-rate">Rate: ₹5.00/min</span></p>
+            <button id="unlock-btn" class="w-full bg-[#00D26A] text-[#111111] py-2 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform mt-2">Tap to Unlock</button>
+        </div>
+    </main>
+
+    <!-- Bottom Actions -->
+    <footer class="fixed bottom-0 left-0 w-full z-50 px-container-margin pb-xl pt-lg bg-gradient-to-t from-surface via-surface/90 to-transparent flex flex-col gap-lg">
+        <!-- Manual Entry Card -->
+        <div class="bg-surface-container-low/80 backdrop-blur-xl border border-white/5 rounded-xl p-md flex items-center justify-between shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+            <div class="flex items-center gap-md">
+                <div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-surface-variant">keyboard</span>
+                </div>
+                <div>
+                    <h3 class="font-title-md text-title-md text-primary">Enter Code Manually</h3>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">If QR is damaged or unreadable</p>
+                </div>
+            </div>
+            <button class="text-electric-green font-label-bold text-label-bold uppercase tracking-wider px-md py-sm rounded-full border border-electric-green/30 hover:bg-electric-green/10 active:scale-95 transition-all" onclick="document.getElementById('preselected-bike-card').style.display='block'">
+                Enter
+            </button>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/rental.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            let bikeId = params.get('bikeId');
+            
+            if (!bikeId) {
+                bikeId = 1; // Default to bike ID 1 for testing convenience
+            }
+            
+            const card = document.getElementById("preselected-bike-card");
+            const nameEl = document.getElementById("preselected-bike-name");
+            const rateEl = document.getElementById("preselected-bike-rate");
+            const unlockBtn = document.getElementById("unlock-btn");
+            
+            try {
+                const bike = await apiRequest(`/bike/${bikeId}`);
+                if (bike) {
+                    nameEl.textContent = `Unlock ${bike.name}`;
+                    rateEl.textContent = `Rate: ₹${bike.pricePerMinute.toFixed(2)}/min`;
+                    card.style.display = "block";
+                    
+                    unlockBtn.addEventListener("click", () => {
+                        rentBike(bikeId);
+                    });
+                }
+            } catch (err) {
+                console.error("Could not load bike details", err);
+            }
+        });
+    </script>
+</body>
+</html>

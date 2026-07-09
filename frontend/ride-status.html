@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Volt - Ride Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#2b2a2a",
+                        "surface": "#141313",
+                        "tertiary": "#cac6c3",
+                        "on-tertiary": "#32302f",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#7f7c7a",
+                        "outline-variant": "#444748",
+                        "surface-tint": "#c8c6c5",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#111111",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#454747",
+                        "surface-variant": "#353434",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b4b5b5",
+                        "surface-dim": "#141313",
+                        "on-tertiary-fixed": "#1d1b1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#7e7c7c",
+                        "background": "#141313",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface-variant": "#c4c7c7",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-bright": "#3a3939",
+                        "inverse-on-surface": "#313030",
+                        "primary": "#00D26A",
+                        "surface-container-highest": "#353434",
+                        "surface-container": "#201f1f",
+                        "on-secondary": "#2f3131",
+                        "inverse-primary": "#5f5e5e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-fixed": "#e6e1df",
+                        "outline": "#8e9192",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#121110",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "secondary": "#c6c6c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "container-margin": "20px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 210, 106, 0.4); }
+            70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 20px rgba(0, 210, 106, 0); }
+            100% { transform: scale(0.95); opacity: 0.5; box-shadow: 0 0 0 0 rgba(0, 210, 106, 0); }
+        }
+        .speed-ring {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes fill-battery {
+            from { width: 0%; }
+            to { width: 85%; }
+        }
+        .battery-fill {
+            animation: fill-battery 1.5s ease-out forwards;
+        }
+        
+        .glass-panel {
+            background: rgba(45, 45, 45, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen flex flex-col antialiased relative overflow-x-hidden selection:bg-primary selection:text-surface">
+    <!-- TopAppBar -->
+    <header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-xl shadow-black/20 fixed top-0 left-0 w-full z-50 flex items-center justify-between px-container-margin h-16">
+        <div class="flex items-center space-x-sm cursor-pointer" onclick="window.location.href='index.html'">
+            <span class="material-symbols-outlined text-primary text-2xl" data-icon="electric_bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+            <span class="font-display-lg text-title-md text-primary tracking-tighter">VOLT</span>
+        </div>
+        <div class="flex items-center">
+            <span class="font-title-md text-title-md text-on-surface">Ride Active</span>
+        </div>
+    </header>
+
+    <!-- NO ACTIVE RIDE SECTION -->
+    <div id="no-ride-section" class="flex flex-col items-center justify-center text-center p-xl gap-4 mt-24" style="display: none;">
+        <span class="material-symbols-outlined text-on-surface-variant text-6xl">directions_bike</span>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">No Active Ride</h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">You don't have any active ride right now. Find a bike on explore and start riding!</p>
+        <button class="bg-[#00D26A] text-[#111111] px-6 py-3 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform mt-4" onclick="window.location.href='explore.html'">Find a Bike</button>
+    </div>
+
+    <!-- ACTIVE RIDE SECTION -->
+    <div id="active-ride-section" style="display: none;">
+        <!-- Main Content Canvas -->
+        <main class="pt-[calc(64px+24px)] pb-32 px-container-margin flex flex-col items-center justify-start space-y-lg relative z-10">
+            <!-- Large Circular Speedometer/Timer -->
+            <div class="relative w-64 h-64 flex items-center justify-center mt-xl">
+                <!-- Outer Glowing Ring -->
+                <div class="absolute inset-0 rounded-full border-4 border-primary/20 speed-ring"></div>
+                <!-- Inner Ring -->
+                <div class="absolute inset-2 rounded-full border-2 border-surface-variant bg-surface-container-high/50 backdrop-blur-md shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center">
+                    <span class="font-display-lg text-[42px] leading-none text-primary font-bold tracking-tighter" id="ride-cost">₹0.00</span>
+                    <span class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest mt-2">TOTAL COST</span>
+                </div>
+            </div>
+
+            <!-- Bike Details Title Row -->
+            <div class="text-center">
+                <h2 id="ride-bike-name" class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-1">e-Bike Pro 1</h2>
+                <p id="ride-bike-rate" class="font-body-sm text-body-sm text-on-surface-variant">₹5.00 / min</p>
+                <p id="ride-bike-type" class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest mt-1">Electric</p>
+            </div>
+
+            <!-- Stats Bento Grid -->
+            <div class="w-full grid grid-cols-2 gap-md mt-lg">
+                <!-- Distance Card -->
+                <div class="bg-[#2D2D2D] rounded-xl p-md relative overflow-hidden group">
+                    <div class="absolute inset-0 border border-white/10 rounded-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between mb-sm text-on-surface-variant">
+                        <span class="font-label-bold text-label-bold uppercase tracking-wider">Distance</span>
+                        <span class="material-symbols-outlined text-[18px]" data-icon="route">route</span>
+                    </div>
+                    <div class="flex items-baseline space-x-1">
+                        <span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">1.2</span>
+                        <span class="font-body-sm text-body-sm text-on-surface-variant">km</span>
+                    </div>
+                </div>
+                <!-- Elapsed Time Card -->
+                <div class="bg-[#2D2D2D] rounded-xl p-md relative overflow-hidden group">
+                    <div class="absolute inset-0 border border-white/10 rounded-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between mb-sm text-on-surface-variant">
+                        <span class="font-label-bold text-label-bold uppercase tracking-wider">Time</span>
+                        <span class="material-symbols-outlined text-[18px]" data-icon="timer">timer</span>
+                    </div>
+                    <div class="flex items-baseline space-x-1">
+                        <span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface" id="ride-duration">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battery Status -->
+            <div class="w-full bg-[#2D2D2D] rounded-xl p-md relative overflow-hidden mt-md">
+                <div class="absolute inset-0 border border-white/10 rounded-xl pointer-events-none"></div>
+                <div class="flex justify-between items-center mb-sm">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-primary text-[20px]" data-icon="battery_charging_full" data-weight="fill" style="font-variation-settings: 'FILL' 1;">battery_charging_full</span>
+                        <span class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-wider">Battery Range</span>
+                    </div>
+                    <span class="font-title-md text-title-md text-primary">85%</span>
+                </div>
+                <!-- Animated Progress Bar -->
+                <div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden relative">
+                    <div class="absolute top-0 left-0 h-full bg-primary rounded-full battery-fill shadow-[0_0_10px_rgba(0,210,106,0.6)]"></div>
+                </div>
+                <div class="mt-sm text-right">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">~45 km remaining</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Actions Overlay -->
+        <div class="fixed bottom-0 left-0 w-full p-container-margin pb-[calc(20px+env(safe-area-inset-bottom))] bg-gradient-to-t from-surface via-surface/90 to-transparent z-40 flex flex-col space-y-md">
+            <div class="flex justify-between items-end w-full">
+                <!-- Emergency FAB -->
+                <button class="w-16 h-16 rounded-full bg-error-container/20 backdrop-blur-xl border border-error/50 shadow-[0_4px_20px_rgba(255,180,171,0.2)] flex items-center justify-center active:scale-90 transition-transform flex-shrink-0" onclick="alert('Emergency support triggered. Dispatching local assistance.')">
+                    <span class="material-symbols-outlined text-error text-[28px]" data-icon="sos" data-weight="fill" style="font-variation-settings: 'FILL' 1;">sos</span>
+                </button>
+                <!-- End Ride Primary Action -->
+                <button id="end-ride-btn" class="flex-grow ml-md h-16 rounded-xl bg-[#00D26A] text-[#111111] font-title-md text-title-md font-bold shadow-[0_20px_40px_rgba(0,0,0,0.4)] active:scale-95 transition-transform flex items-center justify-center space-x-2" onclick="endRide()">
+                    <span>End Ride</span>
+                    <span class="material-symbols-outlined text-[24px]" data-icon="stop_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">stop_circle</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div id="receipt-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-container-margin">
+        <div class="glass-panel w-full max-w-sm rounded-2xl p-lg flex flex-col gap-lg shadow-2xl relative text-center">
+            <span class="material-symbols-outlined text-[#00D26A] text-6xl">check_circle</span>
+            <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Ride Completed</h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Here is your receipt for <span id="receipt-bike" class="font-semibold text-on-surface">-</span></p>
+            
+            <table class="w-full text-left font-body-sm text-body-sm border-t border-b border-white/10 my-2">
+                <tr class="h-10 border-b border-white/5">
+                    <td>Duration:</td>
+                    <td id="receipt-duration" class="text-right text-on-surface font-semibold">-</td>
+                </tr>
+                <tr class="h-10 border-b border-white/5">
+                    <td>Distance:</td>
+                    <td id="receipt-distance" class="text-right text-on-surface font-semibold">-</td>
+                </tr>
+                <tr class="h-10 border-b border-white/5">
+                    <td>Carbon Saved:</td>
+                    <td id="receipt-co2" class="text-right text-[#00D26A] font-semibold">-</td>
+                </tr>
+                <tr class="h-10 font-semibold text-lg">
+                    <td>Total Cost:</td>
+                    <td id="receipt-cost" class="text-right text-[#00D26A]">-</td>
+                </tr>
+            </table>
+            
+            <button class="w-full bg-[#00D26A] text-[#111111] py-3 rounded-lg font-label-bold text-label-bold active:scale-95 transition-transform" onclick="window.location.href='rewards.html'">
+                Claim Rewards
+            </button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/rental.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadActiveRide();
+        });
+
+        function endRide() {
+            returnBike();
+        }
+    </script>
+</body>
+</html>
