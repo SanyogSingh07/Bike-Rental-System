@@ -46,8 +46,6 @@ jobs:
     name: Deploy Frontend → Vercel
     runs-on: ubuntu-latest
     needs: quality-gate
-    outputs:
-      vercel_url: ${{ steps.deploy-vercel.outputs.vercel-url }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -70,14 +68,12 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
       - name: Deploy to Vercel
-        id: deploy-vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: frontend-react
-          vercel-args: '--prod'
+        run: npx --yes vercel@latest deploy --prod --yes
+        working-directory: frontend-react
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
   deploy-backend:
     name: Deploy Backend → Railway
@@ -126,7 +122,7 @@ jobs:
     steps:
       - name: Verify Frontend Status (Vercel)
         run: |
-          FRONTEND_URL="${{ needs.deploy-frontend.outputs.vercel_url }}"
+          FRONTEND_URL="https://bike-rental-system-sanyog2.vercel.app"
           echo "Verifying Frontend at: $FRONTEND_URL"
           
           # Poll frontend (Max 3 minutes / 18 attempts every 10s)
