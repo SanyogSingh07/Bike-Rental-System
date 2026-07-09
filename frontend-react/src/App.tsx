@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from '@/components/Navbar'
 import BottomNav from '@/components/BottomNav'
 import Login from '@/pages/Login'
@@ -43,6 +44,7 @@ export default function App() {
         {/* 404 fallback */}
         <Route path="*" element={<AppLayout><Home /></AppLayout>} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   )
 }
