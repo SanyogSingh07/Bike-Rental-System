@@ -1,0 +1,59 @@
+site_name: Volt Rental
+site_description: Enterprise-grade Smart Bike Rental Platform Documentation
+site_author: Volt Rental Engineering Team
+site_url: https://SanyogSingh07.github.io/Bike-Rental-System/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Welcome: index.md
+  - Engineering Playbook: engineering-playbook.md
+  - Architecture: architecture.md
+  - API Specifications: api.md
+  - Database Design: database.md
+  - Security & Authentication: security.md
+  - Deployment Guide: deployment.md
+  - Testing Strategy: testing.md
+  - Product Roadmap: roadmap.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
