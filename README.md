@@ -1,124 +1,77 @@
-# Volt Rental
+# Volt Rental (Bike Rental System)
 
-### Enterprise-Grade Smart Bike Rental Platform
+> Full-stack urban mobility enterprise product featuring a Spring Boot REST API, React 19 web application, Supabase PostgreSQL database, and MkDocs technical documentation.
 
-Volt Rental is a production-ready, full-stack monorepo designed for premium micro-mobility operations. Built on a Clean Architecture, it leverages Spring Boot, React, Vite, TailwindCSS, and Supabase to deliver a high-performance, secure, and fully automated bike sharing ecosystem.
-
----
-
-## 🚀 Live Links & Documentation
-
-- **Interactive Documentation Website:** [Volt Rental Documentation Portal](https://SanyogSingh07.github.io/Bike-Rental-System/) (Built with MkDocs Material Theme)
-- **Production API:** `https://bike-rental-system-production-2f94.up.railway.app` (Hosted on Railway)
-- **Production Web Application:** `https://volt-rental-frontend.vercel.app` (Hosted on Vercel)
+[Live Application](https://volt-rental-frontend.vercel.app) · [Repository](https://github.com/SanyogSingh07/Bike-Rental-System)
 
 ---
 
-## 🛠 Technology Stack
+## Overview
 
-### Frontend Client (`frontend-react/`)
-- **Core:** React 19, TypeScript
-- **Styling:** TailwindCSS 4
-- **State Management:** Zustand
-- **Bundler:** Vite
-
-### Backend API Services (`backend/`)
-- **Core:** Spring Boot 3.5.0, Java 21
-- **Database Access:** Spring Data JPA
-- **Security:** Spring Security (Stateless HS256 JWT, BCrypt Salting)
-- **Build System:** Maven
-
-### Database & Operations
-- **Database:** Supabase (PostgreSQL 15) with Row-Level Security (RLS)
-- **CI/CD Automation:** GitHub Actions
-- **Monitoring:** Spring Boot Actuator
+**Volt Rental** is a full-stack monorepo application engineered for managing urban bike rentals, user accounts, fleet availability, and transaction processing. Built with modern enterprise software patterns, the system couples a high-performance Java Spring Boot backend with a responsive React 19 frontend hosted on Vercel.
 
 ---
 
-## 🏛 Clean Architecture Overview
+## Problem & Solution
 
-Volt Rental splits the application concerns into decoupled boundaries:
+Traditional bike rental management systems suffer from disconnected inventory states and complex rental workflows. **Volt Rental** solves this by providing:
+- Real-time fleet inventory tracking and availability status.
+- Transactional rental processing backed by PostgreSQL constraint handling.
+- Automated technical documentation built with MkDocs.
+
+---
+
+## System Architecture
 
 ```
-  ┌───────────────────────┐
-  │     Vite + React      │ ──► Presentation Client
-  └──────────┬────────────┘
-             │ HTTP REST / JWT
-             ▼
-  ┌───────────────────────┐
-  │  Spring Boot Backend  │
-  │   ├── Controller      │ ──► REST request mapping & DTO validation
-  │   ├── Service         │ ──► Core domain business logic
-  │   └── Repository      │ ──► Abstract data access
-  └──────────┬────────────┘
-             │ JDBC
-             ▼
-  ┌───────────────────────┐
-  │  Supabase PostgreSQL  │ ──► Relational Data Store
-  └───────────────────────┘
+[ React 19 + TypeScript Frontend ] ── (Vercel)
+                  │
+                  ▼ (REST APIs)
+[ Spring Boot 3.5 Backend Service ]
+                  │
+                  ▼ (PostgreSQL JPA / Hibernate)
+    [ Supabase Managed Database ]
 ```
 
 ---
 
-## 📦 Monorepo Directory Layout
+## Tech Stack & Components
+
+- **Backend**: Java 17, Spring Boot 3.5, Spring Security, Spring Data JPA, Hibernate.
+- **Frontend**: React 19, TypeScript, Vite, TailwindCSS, Lucide Icons.
+- **Database**: Supabase Cloud PostgreSQL.
+- **Documentation & Deployment**: MkDocs, Vercel Cloud Platform.
+
+---
+
+## Project Structure
 
 ```
-Volt-Rental/
-├── .github/workflows/    # Monorepo-aware CI/CD pipelines
-├── backend/              # Spring Boot backend maven project
-├── frontend-react/       # Vite + React client codebase
-├── frontend/             # Legacy static HTML/CSS (DO NOT DEPLOY)
-├── docs/                 # Documentation Markdown files (GitHub Pages)
-├── assets/               # Screenshots, diagrams, and repository media
-└── scripts/              # Helper shell and deployment automation scripts
+Bike-Rental-System/
+├── README.md
+├── mkdocs.yml             # MkDocs Configuration
+├── backend/               # Spring Boot Monorepo Component
+│   ├── pom.xml
+│   └── src/main/java/com/volt/rental/
+├── frontend/              # React 19 Monorepo Component
+│   ├── package.json
+│   └── src/
+└── docs/                  # System Architecture Documentation
 ```
 
 ---
 
-## ⚙️ Quick Start Installation
+## Installation & Setup
 
-### Prerequisites
-- Node.js 22 LTS
-- Java Development Kit (JDK) 21
-- Maven (or use `./mvnw` wrapper)
+### Backend (Spring Boot)
+```bash
+cd backend
+./mvnw spring-boot:run
+```
 
-### Setup the Backend
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Run compilation and test validation:
-   ```bash
-   ./mvnw clean verify
-   ```
-3. Boot up the local server (listens on port `8080` by default):
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-
-### Setup the Frontend
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend-react
-   ```
-2. Install npm dependencies:
-   ```bash
-   npm ci
-   ```
-3. Boot the local development server (with Hot Module Replacement):
-   ```bash
-   npm run dev
-   ```
-
----
-
-## 🚀 Automated CI/CD Pipelines
-
-Our integration pipelines run continuously via GitHub Actions:
-- **Quality Gates (`ci.yml`):** Automatically triggers on pull requests and pushes to `develop`/`feature/*` branches. Performs frontend lint checks (`oxlint`), type checks, production builds, and runs JUnit test packages.
-- **Deploys (`deploy.yml`):** Triggers on merges to `main`. Deploys the React app to Vercel, deploys the Spring Boot app to Railway, pushes the compiled documentation site to GitHub Pages, and polls the `/actuator/health` endpoint to verify full end-to-end functionality.
-
----
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Frontend (React 19)
+```bash
+cd frontend
+npm install
+npm run dev
+```
